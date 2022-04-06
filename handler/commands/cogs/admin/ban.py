@@ -24,7 +24,7 @@ class Ban(commands.Cog):
     )
     async def ban(self, ctx, user: discord.User):
         if user == ctx.message.author:
-            await ctx.send(f"You can't ban yourself, {ctx.message.author.mention}")
+            await ctx.send(f"You can't ban yourself dummy, {ctx.message.author.mention}")
             return
         await ctx.guild.ban(user)
         self.yadps_log.warning(f"{user} has been banned!")
