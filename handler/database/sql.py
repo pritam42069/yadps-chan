@@ -1,13 +1,13 @@
 import asyncpg, asyncio
-import handler.config.data
-import handler.logging.log
+from handler.config.data import Data
+from handler.logging.log import Log
 
 
 class Sql:
 
     def __init__(self):
-        self.data = handler.config.data.Data()
-        self.log = handler.logging.log.Log().create(__name__, self.data.config["databaseLog"])
+        self.data = Data()
+        self.log = Log().create(__name__, self.data.config["databaseLog"])
         self.sql_data = {
             "database": self.data.config["sql_user"],
             "host": self.data.config["sql_host"],
@@ -16,9 +16,6 @@ class Sql:
             "pass": self.data.config["sql_pass"]
         }
         self.pool = None
-
-
-    def init(self):
         global signal
         for k, v in self.sql_data.items():
             if len(v) == 0:
@@ -29,12 +26,6 @@ class Sql:
         asyncio.run(self.start(signal))
 
     async def start(self, signal=None):
-        if signal == "empty":
-            self.log.warn("Received empty config flag. SQL will not start.")
-            return
-        if signal == "error":
-            self.log.warn("Config error flag received. SQL will not start")
-            return
         if signal == "valid" or signal is None:
             self.log.info("Starting PostgreSQL Pool")
             self.pool = await self.create_pool()

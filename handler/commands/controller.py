@@ -4,14 +4,12 @@ import os
 
 
 class CommandController:
-    data = Data().read()
+    data = Data()
     command_log = Log().create(__name__, data.config["commandLog"])
     total_loaded = 0
 
     def __init__(self, bot):
         self.bot = bot
-
-    def init(self):
         self.command_log.info("Initing commands")
         self.load()
 

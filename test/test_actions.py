@@ -3,23 +3,30 @@ import unittest
 import dotenv
 import yaml
 from schema import Schema, SchemaError
-
+from handler.logging.log import Log
+from handler.config.data import Data
 
 
 class TestActions(unittest.TestCase):
+    data = Data()
+    log = Log().create(__name__, data.config["botLog"])
+
     def test_assertPythonVersion(self):
         self.assertTrue(sys.version_info[0:2] == (3, 10))
 
-    def test_assertTokenExists(self):
+    def assertTokenExists(self):
         def token_exists() -> bool:
-            env = dotenv.dotenv_values("settings/.env")
+            settings_file = "settings/.env"
+            env = dotenv.dotenv_values(settings_file)
             if "TOKEN" not in env:
-                print("[ERROR] -> Missing key: TOKEN")
+                self.log.error(f"Key: TOKEN not found in {settings_file}")
                 return False
-            for k, v in env.items():
-                if k == "TOKEN" and len(v) == 0:
-                    print("[ERROR] -> Invalid TOKEN value")
-                    return False
+            if len(env.get("TOKEN")) == 0:
+                self.log.error("Empty value for key TOKEN")
+                return False
+            if len(env.get("TOKEN")) != 59:
+                self.log.error(f"Token has incorrect length. Expected: 59. Got: {len(env.get('TOKEN'))}")
+                return False
             return True
         self.assertTrue(token_exists())
 
@@ -66,6 +73,6 @@ class TestActions(unittest.TestCase):
                 yadps_schema.validate(y)
                 return True
             except SchemaError as err:
-                print(err)
+                self.log.error(err)
                 return False
         self.assertTrue(valid_yaml())

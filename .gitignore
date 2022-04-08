@@ -206,4 +206,4 @@ fabric.properties
 
 configs/bot/
 settings/.env
-logs/*.log
+logs/*.log*

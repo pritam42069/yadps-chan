@@ -1,4 +1,7 @@
 import sys
+
+import disnake
+
 from handler.bot.yadps import Yadps
 
 if __name__ == "__main__":
@@ -7,6 +10,5 @@ if __name__ == "__main__":
             f"Python version must be minimum 3.10. Currently detected version: "
             f"{str(sys.version_info.major) + '.' + str(sys.version_info.minor)}")
         exit(1)
-    yadps = Yadps(command_prefix=Yadps.data.config["prefix"], test_guilds=[956780366063095808])
-    yadps.init()
+    yadps = Yadps(test_guilds=[956780366063095808], intents=disnake.Intents.default())
     yadps.run(yadps.data.config["token"])
