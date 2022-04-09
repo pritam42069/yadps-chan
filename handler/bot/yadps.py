@@ -13,8 +13,8 @@ class Yadps(commands.Bot):
 
     def __init__(self, **options: Any):
         super().__init__(**options)
-        self.bot_log.info("Initing yadps-chan")
-        self.command_controller = CommandController
+        self.bot_log.info("YADPS-Chan is starting")
+        self.command_controller = CommandController(self).load()
         if self.data.config["sql_enabled"]:
             self.sql = Sql()
         if self.data.config["token"] == "":

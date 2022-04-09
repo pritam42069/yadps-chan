@@ -11,7 +11,6 @@ class CommandController:
     def __init__(self, bot):
         self.bot = bot
         self.command_log.info("Initing commands")
-        self.load()
 
     def load(self):
         if self.data.config["enableDevCommands"]:
