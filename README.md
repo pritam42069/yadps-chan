@@ -2,7 +2,7 @@
 Check [requirements.txt](https://github.com/pritam42069/yadps-chan/blob/main-(stable)/requirements.txt)
 
 # Description
-- YADPS-Chan Version: `0.0.5`
+- YADPS-Chan Version: `0.0.6`
 - This project isn't maintained consistently, it's a hobby learning project by our server to work on as time goes on.
 
 # Roadmap

@@ -1,8 +1,0 @@
-asyncpg~=0.24.0
-PyYAML~=6.0
-python-dotenv~=0.19.1
-disnake~=2.4.0
-requests~=2.27.1
-psutil~=5.9.0
-py-cpuinfo~=8.0.0
-schema~=0.7.5

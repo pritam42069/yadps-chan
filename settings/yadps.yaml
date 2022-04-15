@@ -1,8 +1,9 @@
 yadps:
-  version: 0.0.5
+  version: 0.0.6
   databaseEnabled: False
   mode: development
   envFile: settings/.env
+  serverInfoFile: settings/server.info
 
 logData:
   enableLogging: true
@@ -10,9 +11,10 @@ logData:
   databaseLog: logs/sql.log
   commandLog: logs/commands.log
   systemLog: logs/system.log
+  testLog: logs/test.log
 
 commandData:
-  cogPath: handler.commands.cogs
+  cogPath: src.yadps.commands.cogs
   userCog: user
   modCog: mod
   adminCog: admin

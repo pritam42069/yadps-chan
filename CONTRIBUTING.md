@@ -2,10 +2,11 @@
 
 ## Standard
 1. [First install minimum Python 3.10](https://www.python.org/downloads/)
-2. Install requirements via `pip install -r requirements.txt`
-3. Setup `.env` file inside `settings/` folder with key value `TOKEN=XXX`
-4. Run `python __main__.py` 
-5. For some systems it may be `python3` instead of `python`
+2. Clone the project
+3. Run: `python -m pip install --editable .[dev]` for the development environment.
+Use `.` instead of `.[dev]` for production. 
+4. Setup your bot token in `settings/.env` with key `TOKEN=`
+5. Run `python main.py`
 
 ## Docker
 1. [This guide is under the presumption you have Docker installed.](https://docs.docker.com/get-docker/)
