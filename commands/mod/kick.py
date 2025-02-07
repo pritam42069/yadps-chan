@@ -1,10 +1,10 @@
-from neo.config.data import Data
+from config.neoconfig import NeoConfig
 from disnake.ext import commands
 import disnake as discord
 
 class Kick(commands.Cog):
 
-    data = Data()
+    data = NeoConfig()
 
     def __init__(self, bot):
         self.bot = bot

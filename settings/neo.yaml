@@ -1,5 +1,5 @@
 neo:
-  version: 0.0.4
+  version: 0.0.5
   databaseEnabled: False
   mode: development
   envFile: settings/.env
@@ -14,7 +14,7 @@ logData:
   testLog: logs/test.log
 
 commandData:
-  cogPath: src.neo.commands.cogs
+  cogPath: commands
   userCog: user
   modCog: mod
   adminCog: admin

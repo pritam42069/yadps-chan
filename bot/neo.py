@@ -1,20 +1,18 @@
 #!/usr/bin/env python
-
-from typing import Any
 import disnake
-from neo.logging.log import Log
-from neo.config.data import Data
-from neo.database.sql import Sql
-from neo.commands.controller import CommandController
+from typing import Any
+from config.neoconfig import NeoConfig
+from logger.log import Log
+from database.sql import Sql
+from commands.controller import CommandController
 from test.test_actions import TestActions
 from disnake.ext import commands
-
 
 class Neo(commands.Bot):
     test = TestActions()
     test.assertTokenValidity()
     test.assertValidConfig()
-    data = Data()
+    data = NeoConfig()
     command_controller = CommandController
     log = Log().create(__name__, data.botLog)
 
@@ -25,8 +23,9 @@ class Neo(commands.Bot):
         if self.data.databaseEnabled:
             self.log.info("Database is enabled, starting")
             self.sql = Sql()
-            if self.sql.loaded:
-                self.log.info("Database successfully started")
+            if not self.sql.loaded:
+                self.log.warn("SQL hasn't loaded.")
+            self.log.info("SQL has started!")
         else:
             self.log.warn("SQL IS DISABLED")
 
@@ -44,18 +43,16 @@ class Neo(commands.Bot):
         self.log.info(f"Slash command: {inter.data.name} invoked by {inter.author} successful")
 
     async def on_slash_command_error(self, interaction: disnake.ApplicationCommandInteraction, error):
-        if isinstance(error, commands.MissingAnyRole):
-            if self.data.enableCommandWarnings:
-                self.log.warning(f"{interaction.author} is missing roles for command: {interaction.data.name}")
-            if self.data.enableCommandDebug or self.data.mode == "development":
-                self.log.debug(error)
-            await interaction.send(f"{interaction.author.mention}, you don't have the required permissions for this command.")
-        elif isinstance(error, commands.MissingRequiredArgument):
-            await interaction.send(f"You are missing a required argument in your command.")
-        elif isinstance(error, commands.ArgumentParsingError):
-            await interaction.send("I seem to have an issue parsing the arguments you have given me for your command.")
-        else:
-            await interaction.send("There was an error trying to use this command. Contact an Administrator to check "
+        match error:
+            case commands.MissingAnyRole:
+                if self.data.enableCommandWarnings:
+                    self.log.warning(f"{interaction.author} is missing roles for command: {interaction.data.name}")
+            case commands.MissingRequiredArgument:
+                await interaction.send(f"You are missing a required argument in your command.")
+            case commands.ArgumentParsingError:
+                await interaction.send("I seem to have an issue parsing the arguments you have given me for your command.")
+            case _:
+                await interaction.send("There was an error trying to use this command. Contact an Administrator to check "
                                    "the logs.")
-        self.log.error(error)
+                self.log.error(error)
 

@@ -3,12 +3,12 @@ import unittest
 import dotenv
 import yaml
 from schema import Schema, SchemaError
-from neo.logging.log import Log
-from neo.config.data import Data
+from logger.log import Log
+from config.neoconfig import NeoConfig
 
 
 class TestActions(unittest.TestCase):
-    data = Data()
+    data = NeoConfig()
     log = Log().create(__name__, "logs/test.logs")
 
     def test_assertPythonVersion(self):

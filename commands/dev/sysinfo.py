@@ -4,11 +4,11 @@ import cpuinfo
 import disnake
 import os
 from disnake.ext import commands
-from neo.config.data import Data
+from config.neoconfig import NeoConfig
 
 
 class SysInfo(commands.Cog):
-    data = Data()
+    data = NeoConfig()
 
     def __init__(self, bot):
         self.bot = bot

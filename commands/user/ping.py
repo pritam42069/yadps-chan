@@ -1,11 +1,11 @@
 from disnake.ext import commands
-from neo.config.data import Data
+from config.neoconfig import NeoConfig
 import disnake
 
 
 class Ping(commands.Cog):
 
-    data = Data()
+    data = NeoConfig()
 
     def __init__(self, bot):
         self.bot = bot

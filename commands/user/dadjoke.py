@@ -1,10 +1,10 @@
 import requests
 import disnake
 from disnake.ext import commands
-from neo.config.data import Data
+from config.neoconfig import NeoConfig
 class DadJoke(commands.Cog):
 
-    data = Data()
+    data = NeoConfig()
 
     def __init__(self, bot):
         self.bot = bot

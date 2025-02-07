@@ -1,16 +1,15 @@
 import os
-from neo.config.data import Data
-from neo.logging.log import Log
+from config.neoconfig import NeoConfig
+from logger.log import Log
 
 class CommandController:
-    data = Data()
+    data = NeoConfig()
     command_log = Log().create(__name__, data.commandLog)
     total_loaded = 0
 
     _state_load = "load"
     _state_reload = "reload"
     _state_unload = "unload"
-
 
     def __init__(self, bot):
         self.bot = bot
@@ -43,6 +42,6 @@ class CommandController:
 
     def set_command_state(self, cog, state, command: str):
         cog = self.data.cogPath + '.' + cog
-        for c in os.listdir(cog.replace('.', os.path.sep)):
-            if c != "__init__.py" and c == command:
+        for cmd in os.listdir(cog.replace('.', os.path.sep)):
+            if cmd != "__init__.py" and cmd == command:
                 getattr(self.bot, "%s_extension" % state)(*{cog + f".{command[:-3]}"})
